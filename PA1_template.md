@@ -109,31 +109,17 @@ Note that there are a number of days/intervals where there are missing values (c
 
 1.Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 𝙽𝙰s)
 
-``` r
-any(is.na(activity$steps))
+```{r}
+na_number <- sum(is.na(activity$steps))
+na_number
 ```
-
-    ## [1] TRUE
-
-``` r
-any(is.na(levels(activity$date)))
+    ## [1] 2304
+```{r}
+percentage_na <- mean(is.na(activity$steps))
+percentage_na
 ```
-
-    ## Warning in is.na(levels(activity$date)): is.na() applied to non-(list or
-    ## vector) of type 'NULL'
-
-    ## [1] FALSE
-
-``` r
-any(is.na(activity$interval))
-```
-
-    ## [1] FALSE
-
-``` r
-NA_total <- sum(is.na(activity$steps))
-NA_proportion <- sum(is.na(activity$steps)) / nrow(activity)
-```
+   ## [1] 0.1311475
+Total number of missing values in the dataset is 2304
 
 1.  Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
@@ -314,6 +300,7 @@ str(sum_mean_median_day)
     ##  $ mean_steps  : num  37.383 0.438 39.417 42.069 46.16 ...
     ##  $ median_steps: num  34.1 0 0 0 0 ...
 
+First plot is the the total number of steps taken before and after the inclusion of missing data
 ``` r
 par(mfcol = c(2,1))
 hist(sum_mean_median_day$sum_steps, main = "Histogram of the total steps per day AFTER missing data filling", xlab = "Steps", breaks = 16, col = "wheat")
@@ -322,6 +309,7 @@ hist(steps_per_day$steps, main = "Histogram of the total steps per day BEFORE mi
 
 ![](PA1_template_files/figure-markdown_github/histogram%20plot-1.png)
 
+This plot below shows the mean steps taken per day before and after the missing data was filled in.
 ``` r
 plot(sum_mean_median_day$date, sum_mean_median_day$mean_steps, type = "h", pch = 1, col = "red")
 points(mean_median_steps_per_day$date, mean_median_steps_per_day$mean, pch = 4)
@@ -329,6 +317,7 @@ legend("topleft", pch = c(1,4), col = c("red", "black"), legend = c("before", "a
 ```
 
 ![](PA1_template_files/figure-markdown_github/unnamed-chunk-15-1.png)
+Imputing missing values, mean of the total number of steps taken per day increased while median decreased. Imputing missing data resulted in increase of total daily number of steps.
 
 Are there differences in activity patterns between weekdays and weekends?
 -------------------------------------------------------------------------
